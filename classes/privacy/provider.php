@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * provider.php
+ *
+ * @package   mod_videorubric
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace mod_videorubric\privacy;
 
 use core_privacy\local\metadata\collection;
@@ -17,6 +40,12 @@ final class provider implements
         \core_privacy\local\request\plugin\provider,
         \core_privacy\local\request\core_userlist_provider {
 
+    /**
+     * Method get_metadata.
+     *
+     * @param collection $collection Parameter collection.
+     * @return collection Return value.
+     */
     public static function get_metadata(collection $collection): collection {
         $collection->add_database_table('videorubric_submission', [
             'userid' => 'privacy:metadata:submission:userid',
@@ -41,6 +70,12 @@ final class provider implements
         return $collection;
     }
 
+    /**
+     * Method get_contexts_for_userid.
+     *
+     * @param int $userid Parameter userid.
+     * @return contextlist Return value.
+     */
     public static function get_contexts_for_userid(int $userid): contextlist {
         $contextlist = new contextlist();
         $sql = "SELECT DISTINCT ctx.id
@@ -62,6 +97,12 @@ final class provider implements
         return $contextlist;
     }
 
+    /**
+     * Method export_user_data.
+     *
+     * @param approved_contextlist $contextlist Parameter contextlist.
+     * @return void Return value.
+     */
     public static function export_user_data(approved_contextlist $contextlist): void {
         global $DB;
         $userid = $contextlist->get_user()->id;
@@ -113,6 +154,12 @@ final class provider implements
         }
     }
 
+    /**
+     * Method delete_data_for_all_users_in_context.
+     *
+     * @param \context $context Parameter context.
+     * @return void Return value.
+     */
     public static function delete_data_for_all_users_in_context(\context $context): void {
         global $DB;
         if (!$context instanceof \context_module) {
@@ -129,6 +176,12 @@ final class provider implements
         get_file_storage()->delete_area_files($context->id, 'mod_videorubric');
     }
 
+    /**
+     * Method delete_data_for_user.
+     *
+     * @param approved_contextlist $contextlist Parameter contextlist.
+     * @return void Return value.
+     */
     public static function delete_data_for_user(approved_contextlist $contextlist): void {
         $userid = $contextlist->get_user()->id;
         foreach ($contextlist->get_contexts() as $context) {
@@ -136,6 +189,12 @@ final class provider implements
         }
     }
 
+    /**
+     * Method get_users_in_context.
+     *
+     * @param userlist $userlist Parameter userlist.
+     * @return void Return value.
+     */
     public static function get_users_in_context(userlist $userlist): void {
         $context = $userlist->get_context();
         if (!$context instanceof \context_module) {
@@ -159,12 +218,25 @@ final class provider implements
               WHERE s.videorubricid = :vid", ['vid' => $cm->instance]);
     }
 
+    /**
+     * Method delete_data_for_users.
+     *
+     * @param approved_userlist $userlist Parameter userlist.
+     * @return void Return value.
+     */
     public static function delete_data_for_users(approved_userlist $userlist): void {
         foreach ($userlist->get_userids() as $userid) {
             self::delete_user_in_context($userlist->get_context(), $userid);
         }
     }
 
+    /**
+     * Method delete_user_in_context.
+     *
+     * @param \context $context Parameter context.
+     * @param int $userid Parameter userid.
+     * @return void Return value.
+     */
     private static function delete_user_in_context(\context $context, int $userid): void {
         global $DB;
         if (!$context instanceof \context_module) {
@@ -196,6 +268,13 @@ final class provider implements
             [$userid, $cm->instance]);
     }
 
+    /**
+     * Method delete_submission_ids.
+     *
+     * @param \context_module $context Parameter context.
+     * @param array $submissionids Parameter submissionids.
+     * @return void Return value.
+     */
     private static function delete_submission_ids(\context_module $context, array $submissionids): void {
         global $DB;
         [$insql, $params] = $DB->get_in_or_equal($submissionids);

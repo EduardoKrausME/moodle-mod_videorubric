@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * grading_manager.php
+ *
+ * @package   mod_videorubric
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace mod_videorubric\local;
 
 defined('MOODLE_INTERNAL') || die();
@@ -7,6 +30,13 @@ defined('MOODLE_INTERNAL') || die();
  * Grading workflow.
  */
 final class grading_manager {
+    /**
+     * Method get_or_create_grade.
+     *
+     * @param \stdClass $submission Parameter submission.
+     * @param int $graderid Parameter graderid.
+     * @return \stdClass Return value.
+     */
     public static function get_or_create_grade(\stdClass $submission, int $graderid): \stdClass {
         global $DB;
 
@@ -29,6 +59,15 @@ final class grading_manager {
         return $grade;
     }
 
+    /**
+     * Method select_level.
+     *
+     * @param \stdClass $submission Parameter submission.
+     * @param int $criterionid Parameter criterionid.
+     * @param int $levelid Parameter levelid.
+     * @param int $graderid Parameter graderid.
+     * @return \stdClass Return value.
+     */
     public static function select_level(\stdClass $submission, int $criterionid, int $levelid, int $graderid): \stdClass {
         global $DB;
 
@@ -61,6 +100,14 @@ final class grading_manager {
         return $DB->get_record('videorubric_grade', ['id' => $grade->id], '*', MUST_EXIST);
     }
 
+    /**
+     * Method save_feedback.
+     *
+     * @param \stdClass $submission Parameter submission.
+     * @param string $feedback Parameter feedback.
+     * @param int $graderid Parameter graderid.
+     * @return \stdClass Return value.
+     */
     public static function save_feedback(\stdClass $submission, string $feedback, int $graderid): \stdClass {
         global $DB;
         $grade = self::get_or_create_grade($submission, $graderid);
@@ -71,6 +118,16 @@ final class grading_manager {
         return $grade;
     }
 
+    /**
+     * Method add_comment.
+     *
+     * @param \stdClass $submission Parameter submission.
+     * @param int $seconds Parameter seconds.
+     * @param string $comment Parameter comment.
+     * @param int $graderid Parameter graderid.
+     * @param \context_module $context Parameter context.
+     * @return \stdClass Return value.
+     */
     public static function add_comment(\stdClass $submission, int $seconds, string $comment, int $graderid,
             \context_module $context): \stdClass {
         global $DB;
@@ -93,6 +150,15 @@ final class grading_manager {
         return $record;
     }
 
+    /**
+     * Method finalize.
+     *
+     * @param \stdClass $submission Parameter submission.
+     * @param int $graderid Parameter graderid.
+     * @param \stdClass $cm Parameter cm.
+     * @param \context_module $context Parameter context.
+     * @return \stdClass Return value.
+     */
     public static function finalize(\stdClass $submission, int $graderid, \stdClass $cm,
             \context_module $context): \stdClass {
         global $DB;
@@ -131,6 +197,13 @@ final class grading_manager {
         return $grade;
     }
 
+    /**
+     * Method get_feedback_audio_url.
+     *
+     * @param \context_module $context Parameter context.
+     * @param int $gradeid Parameter gradeid.
+     * @return ?\moodle_url Return value.
+     */
     public static function get_feedback_audio_url(\context_module $context, int $gradeid): ?\moodle_url {
         $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, 'mod_videorubric', 'feedback_audio', $gradeid, 'id DESC', false);
@@ -142,6 +215,13 @@ final class grading_manager {
             $gradeid, $file->get_filepath(), $file->get_filename(), false);
     }
 
+    /**
+     * Method recalculate.
+     *
+     * @param \stdClass $submission Parameter submission.
+     * @param \stdClass $grade Parameter grade.
+     * @return void Return value.
+     */
     public static function recalculate(\stdClass $submission, \stdClass $grade): void {
         global $DB;
 

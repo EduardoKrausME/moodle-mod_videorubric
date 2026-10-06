@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * rubric_manager.php
+ *
+ * @package   mod_videorubric
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace mod_videorubric\local;
 
 defined('MOODLE_INTERNAL') || die();
@@ -7,6 +30,12 @@ defined('MOODLE_INTERNAL') || die();
  * Rubric definition management.
  */
 final class rubric_manager {
+    /**
+     * Method get.
+     *
+     * @param int $activityid Parameter activityid.
+     * @return array Return value.
+     */
     public static function get(int $activityid): array {
         global $DB;
 
@@ -18,6 +47,13 @@ final class rubric_manager {
         return array_values($criteria);
     }
 
+    /**
+     * Method save.
+     *
+     * @param int $activityid Parameter activityid.
+     * @param array $criteria Parameter criteria.
+     * @return void Return value.
+     */
     public static function save(int $activityid, array $criteria): void {
         global $DB;
 
@@ -61,6 +97,13 @@ final class rubric_manager {
         $transaction->allow_commit();
     }
 
+    /**
+     * Method save_levels.
+     *
+     * @param int $criterionid Parameter criterionid.
+     * @param array $levels Parameter levels.
+     * @return void Return value.
+     */
     private static function save_levels(int $criterionid, array $levels): void {
         global $DB;
 
