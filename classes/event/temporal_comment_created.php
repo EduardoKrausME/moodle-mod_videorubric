@@ -38,30 +38,41 @@ final class temporal_comment_created extends \core\event\base {
         $this->data['edulevel'] = self::LEVEL_TEACHING;
         $this->data['objecttable'] = 'videorubric_comment';
     }
+
     /**
      * Method get_name.
      *
      * @return string Return value.
      */
-    public static function get_name(): string { return get_string('event:temporalcommentcreated', 'mod_videorubric'); }
+    public static function get_name(): string {
+        return get_string('event:temporalcommentcreated', 'mod_videorubric');
+    }
+
     /**
      * Method get_description.
      *
      * @return string Return value.
      */
     public function get_description(): string {
-        return "The user with id '{$this->userid}' created a timestamped comment for submission '{$this->other['submissionid']}'.";
+        return "The user with id '{$this->userid}' created a timestamped comment for submission " .
+            "'{$this->other['submissionid']}'.";
     }
+
     /**
      * Method get_objectid_mapping.
      *
      * @return array Return value.
      */
-    public static function get_objectid_mapping(): array { return ['db' => 'videorubric_comment', 'restore' => 'videorubric_comment']; }
+    public static function get_objectid_mapping(): array {
+        return ['db' => 'videorubric_comment', 'restore' => 'videorubric_comment'];
+    }
+
     /**
      * Method get_other_mapping.
      *
      * @return array Return value.
      */
-    public static function get_other_mapping(): array { return ['submissionid' => ['db' => 'videorubric_submission', 'restore' => 'videorubric_submission']]; }
+    public static function get_other_mapping(): array {
+        return ['submissionid' => ['db' => 'videorubric_submission', 'restore' => 'videorubric_submission']];
+    }
 }

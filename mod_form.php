@@ -85,7 +85,8 @@ class mod_videorubric_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'completionsubmit', '', get_string('completion:submit', 'mod_videorubric'));
         $mform->addElement('advcheckbox', 'completiongraded', '', get_string('completion:graded', 'mod_videorubric'));
         $group = [];
-        $group[] = $mform->createElement('advcheckbox', 'completionminenabled', '', get_string('completion:minenable', 'mod_videorubric'));
+        $group[] = $mform->createElement('advcheckbox', 'completionminenabled', '',
+            get_string('completion:minenable', 'mod_videorubric'));
         $group[] = $mform->createElement('text', 'completionmingrade', '', ['size' => 6]);
         $mform->addGroup($group, 'completionmingroup', '', ' ', false);
         $mform->setType('completionmingrade', PARAM_FLOAT);

@@ -38,12 +38,16 @@ final class submission_created extends \core\event\base {
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
         $this->data['objecttable'] = 'videorubric_submission';
     }
+
     /**
      * Method get_name.
      *
      * @return string Return value.
      */
-    public static function get_name(): string { return get_string('event:submissioncreated', 'mod_videorubric'); }
+    public static function get_name(): string {
+        return get_string('event:submissioncreated', 'mod_videorubric');
+    }
+
     /**
      * Method get_description.
      *
@@ -52,22 +56,31 @@ final class submission_created extends \core\event\base {
     public function get_description(): string {
         return "The user with id '{$this->userid}' created video submission '{$this->objectid}'.";
     }
+
     /**
      * Method get_url.
      *
      * @return \moodle_url Return value.
      */
-    public function get_url(): \moodle_url { return new \moodle_url('/mod/videorubric/submission.php', ['id' => $this->contextinstanceid]); }
+    public function get_url(): \moodle_url {
+        return new \moodle_url('/mod/videorubric/submission.php', ['id' => $this->contextinstanceid]);
+    }
+
     /**
      * Method get_objectid_mapping.
      *
      * @return array Return value.
      */
-    public static function get_objectid_mapping(): array { return ['db' => 'videorubric_submission', 'restore' => 'videorubric_submission']; }
+    public static function get_objectid_mapping(): array {
+        return ['db' => 'videorubric_submission', 'restore' => 'videorubric_submission'];
+    }
+
     /**
      * Method get_other_mapping.
      *
      * @return array Return value.
      */
-    public static function get_other_mapping(): array { return ['videorubricid' => ['db' => 'videorubric', 'restore' => 'videorubric']]; }
+    public static function get_other_mapping(): array {
+        return ['videorubricid' => ['db' => 'videorubric', 'restore' => 'videorubric']];
+    }
 }

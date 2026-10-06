@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class restore_videorubric_activity_structure_step.
  */
@@ -40,10 +38,14 @@ class restore_videorubric_activity_structure_step extends restore_activity_struc
             new restore_path_element('videorubric_level', '/activity/videorubric/criteria/criterion/levels/level'),
         ];
         if ($this->get_setting_value('userinfo')) {
-            $paths[] = new restore_path_element('videorubric_submission', '/activity/videorubric/submissions/submission');
-            $paths[] = new restore_path_element('videorubric_grade', '/activity/videorubric/submissions/submission/grades/grade');
-            $paths[] = new restore_path_element('videorubric_gradeselection', '/activity/videorubric/submissions/submission/grades/grade/gradeselections/gradeselection');
-            $paths[] = new restore_path_element('videorubric_comment', '/activity/videorubric/submissions/submission/comments/comment');
+            $paths[] = new restore_path_element('videorubric_submission',
+                '/activity/videorubric/submissions/submission');
+            $paths[] = new restore_path_element('videorubric_grade',
+                '/activity/videorubric/submissions/submission/grades/grade');
+            $paths[] = new restore_path_element('videorubric_gradeselection',
+                '/activity/videorubric/submissions/submission/grades/grade/gradeselections/gradeselection');
+            $paths[] = new restore_path_element('videorubric_comment',
+                '/activity/videorubric/submissions/submission/comments/comment');
         }
         return $this->prepare_activity_structure($paths);
     }

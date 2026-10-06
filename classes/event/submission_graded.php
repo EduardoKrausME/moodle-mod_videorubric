@@ -38,12 +38,16 @@ final class submission_graded extends \core\event\base {
         $this->data['edulevel'] = self::LEVEL_TEACHING;
         $this->data['objecttable'] = 'videorubric_grade';
     }
+
     /**
      * Method get_name.
      *
      * @return string Return value.
      */
-    public static function get_name(): string { return get_string('event:submissiongraded', 'mod_videorubric'); }
+    public static function get_name(): string {
+        return get_string('event:submissiongraded', 'mod_videorubric');
+    }
+
     /**
      * Method get_description.
      *
@@ -52,16 +56,22 @@ final class submission_graded extends \core\event\base {
     public function get_description(): string {
         return "The user with id '{$this->userid}' graded submission '{$this->other['submissionid']}' for user '{$this->relateduserid}'.";
     }
+
     /**
      * Method get_objectid_mapping.
      *
      * @return array Return value.
      */
-    public static function get_objectid_mapping(): array { return ['db' => 'videorubric_grade', 'restore' => 'videorubric_grade']; }
+    public static function get_objectid_mapping(): array {
+        return ['db' => 'videorubric_grade', 'restore' => 'videorubric_grade'];
+    }
+
     /**
      * Method get_other_mapping.
      *
      * @return array Return value.
      */
-    public static function get_other_mapping(): array { return ['submissionid' => ['db' => 'videorubric_submission', 'restore' => 'videorubric_submission']]; }
+    public static function get_other_mapping(): array {
+        return ['submissionid' => ['db' => 'videorubric_submission', 'restore' => 'videorubric_submission']];
+    }
 }

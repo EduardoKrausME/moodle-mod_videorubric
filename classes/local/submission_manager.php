@@ -24,8 +24,6 @@
 
 namespace mod_videorubric\local;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Submission lifecycle and File API storage.
  */
