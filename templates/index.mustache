@@ -1,0 +1,22 @@
+{{!
+    @template mod_videorubric/index
+    Example context (json):
+    {"instances":[{"name":"Activity","url":"https://example.test","duedate":"Monday"}]}
+}}
+<h2>{{#str}}modulenameplural, mod_videorubric{{/str}}</h2>
+<table class="generaltable">
+    <thead>
+        <tr>
+            <th scope="col">{{#str}}name{{/str}}</th>
+            <th scope="col">{{#str}}duedate, mod_videorubric{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#instances}}
+            <tr>
+                <td><a href="{{url}}">{{name}}</a></td>
+                <td>{{duedate}}</td>
+            </tr>
+        {{/instances}}
+    </tbody>
+</table>

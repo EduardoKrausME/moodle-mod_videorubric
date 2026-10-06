@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * view.php
+ * Activity view page.
  *
  * @package   mod_videorubric
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
@@ -47,39 +47,46 @@ if ($completion = new completion_info($course)) {
     $completion->set_module_viewed($cm);
 }
 
-echo $OUTPUT->header();
-echo $OUTPUT->heading(format_string($activity->name));
-if (trim($activity->intro ?? '') !== '') {
-    echo $OUTPUT->box(format_module_intro('videorubric', $activity, $cm->id), 'generalbox mod_introbox');
-}
+$data = [
+    'activityname' => format_string($activity->name),
+    'hasintro' => trim($activity->intro ?? '') !== '',
+    'intro' => trim($activity->intro ?? '') !== ''
+        ? format_module_intro('videorubric', $activity, $cm->id)
+        : '',
+    'isgrader' => has_capability('mod/videorubric:grade', $context),
+];
 
-if (has_capability('mod/videorubric:grade', $context)) {
-    $url = new moodle_url('/mod/videorubric/submissions.php', ['id' => $cm->id]);
-    echo $OUTPUT->single_button($url, get_string('reviewsubmissions', 'mod_videorubric'), 'get');
-    $rubricurl = new moodle_url('/mod/videorubric/rubric.php', ['id' => $cm->id]);
-    echo $OUTPUT->single_button($rubricurl, get_string('managerubric', 'mod_videorubric'), 'get');
+if ($data['isgrader']) {
+    $data['reviewurl'] = (new moodle_url('/mod/videorubric/submissions.php', ['id' => $cm->id]))->out(false);
+    $data['rubricurl'] = (new moodle_url('/mod/videorubric/rubric.php', ['id' => $cm->id]))->out(false);
 } else {
     require_capability('mod/videorubric:submit', $context);
+
     $submission = \mod_videorubric\local\submission_manager::get_for_user($activity->id, $USER->id, false);
     $status = $submission ? $submission->status : 'notsubmitted';
-    echo $OUTPUT->box(get_string('status:' . $status, 'mod_videorubric'), 'alert alert-info');
-    $url = new moodle_url('/mod/videorubric/submission.php', ['id' => $cm->id]);
-    echo $OUTPUT->single_button($url, get_string('opensubmission', 'mod_videorubric'), 'get');
+    $data['status'] = get_string('status:' . $status, 'mod_videorubric');
+    $data['submissionurl'] = (new moodle_url('/mod/videorubric/submission.php', ['id' => $cm->id]))->out(false);
+    $data['hasfeedback'] = false;
 
     if ($submission && $submission->status === 'submitted') {
-        $grade = $DB->get_record('videorubric_grade', ['submissionid' => $submission->id, 'status' => 'graded']);
+        $grade = $DB->get_record('videorubric_grade', [
+            'submissionid' => $submission->id,
+            'status' => 'graded',
+        ]);
         if ($grade) {
-            echo $OUTPUT->heading(get_string('feedback', 'mod_videorubric'), 3);
-            echo html_writer::div(get_string('finalscore', 'mod_videorubric') . ': ' . format_float($grade->finalscore, 2), 'h5');
-            if (!empty($grade->feedbacktext)) {
-                echo format_text($grade->feedbacktext, FORMAT_PLAIN);
-            }
             $audio = \mod_videorubric\local\grading_manager::get_feedback_audio_url($context, $grade->id);
-            if ($audio) {
-                echo html_writer::tag('audio', '', ['controls' => 'controls', 'src' => $audio->out(false), 'class' => 'w-100 mt-3']);
-            }
+            $data['hasfeedback'] = true;
+            $data['finalscore'] = format_float($grade->finalscore, 2);
+            $data['hasfeedbacktext'] = !empty($grade->feedbacktext);
+            $data['feedbacktext'] = !empty($grade->feedbacktext)
+                ? format_text($grade->feedbacktext, FORMAT_PLAIN)
+                : '';
+            $data['hasaudio'] = (bool)$audio;
+            $data['audiourl'] = $audio ? $audio->out(false) : '';
         }
     }
 }
 
+echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('mod_videorubric/view', $data);
 echo $OUTPUT->footer();

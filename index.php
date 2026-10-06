@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * index.php
+ * Activity index page.
  *
  * @package   mod_videorubric
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
@@ -33,21 +33,22 @@ $PAGE->set_title(get_string('modulenameplural', 'mod_videorubric'));
 $PAGE->set_heading(format_string($course->fullname));
 
 $instances = get_all_instances_in_course('videorubric', $course);
-
-echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('modulenameplural', 'mod_videorubric'));
 if (!$instances) {
-    notice(get_string('thereareno', 'moodle', get_string('modulenameplural', 'mod_videorubric')),
-        new moodle_url('/course/view.php', ['id' => $course->id]));
+    notice(
+        get_string('thereareno', 'moodle', get_string('modulenameplural', 'mod_videorubric')),
+        new moodle_url('/course/view.php', ['id' => $course->id])
+    );
 }
 
-$table = new html_table();
-$table->head = [get_string('name'), get_string('duedate', 'mod_videorubric')];
+$data = ['instances' => []];
 foreach ($instances as $instance) {
-    $table->data[] = [
-        html_writer::link(new moodle_url('/mod/videorubric/view.php', ['id' => $instance->coursemodule]), format_string($instance->name)),
-        !empty($instance->duedate) ? userdate($instance->duedate) : get_string('none'),
+    $data['instances'][] = [
+        'name' => format_string($instance->name),
+        'url' => (new moodle_url('/mod/videorubric/view.php', ['id' => $instance->coursemodule]))->out(false),
+        'duedate' => !empty($instance->duedate) ? userdate($instance->duedate) : get_string('none'),
     ];
 }
-echo html_writer::table($table);
+
+echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('mod_videorubric/index', $data);
 echo $OUTPUT->footer();

@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['core/ajax', 'core/notification'], function(Ajax, Notification) {
+define(['core/ajax', 'core/notification', 'core/templates'], function(Ajax, Notification, Templates) {
     'use strict';
 
 
@@ -140,24 +140,19 @@ define(['core/ajax', 'core/notification'], function(Ajax, Notification) {
                         comment: text,
                     },
                 }]));
-                const row = document.createElement('div');
-                row.className = 'videorubric-comment';
-                row.dataset.commentid = result.id;
-                row.dataset.time = result.timeposition;
-                const seek = document.createElement('button');
-                seek.type = 'button';
-                seek.className = 'btn btn-link videorubric-seek-comment';
-                seek.textContent = result.formattedtime;
-                const body = document.createElement('span');
-                body.className = 'flex-grow-1';
-                body.textContent = result.comment;
-                const del = document.createElement('button');
-                del.type = 'button';
-                del.className = 'btn btn-sm btn-outline-danger videorubric-delete-comment';
-                del.textContent = '×';
-                row.append(seek, body, del);
-                comments?.append(row);
-                bindComment(row);
+                if (comments) {
+                    const {html, js} = await Templates.renderForPromise('mod_videorubric/comment', {
+                        id: result.id,
+                        timeposition: result.timeposition,
+                        time: result.formattedtime,
+                        comment: result.comment,
+                    });
+                    Templates.appendNodeContents(comments, html, js);
+                    const row = comments.lastElementChild;
+                    if (row) {
+                        bindComment(row);
+                    }
+                }
                 if (input) { input.value = ''; }
             } catch (error) {
                 Notification.exception(error);

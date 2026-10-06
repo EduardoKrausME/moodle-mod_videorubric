@@ -1,0 +1,11 @@
+{{!
+    @template mod_videorubric/comment
+    Example context (json):
+    {"id":1,"timeposition":15,"time":"00:15","comment":"Comment"}
+}}
+<div class="videorubric-comment" data-commentid="{{id}}" data-time="{{timeposition}}">
+    <button type="button" class="btn btn-link videorubric-seek-comment">{{time}}</button>
+    <span class="flex-grow-1">{{comment}}</span>
+    <button type="button" class="btn btn-sm btn-outline-danger videorubric-delete-comment"
+        aria-label="{{#str}}delete{{/str}}">×</button>
+</div>

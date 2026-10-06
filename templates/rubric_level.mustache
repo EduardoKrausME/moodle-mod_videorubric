@@ -1,0 +1,20 @@
+{{!
+    @template mod_videorubric/rubric_level
+    Example context (json):
+    {"criterionindex":0,"index":0,"id":0,"label":"","description":"","points":"0"}
+}}
+<div class="videorubric-level border rounded p-3 mb-2 d-grid gap-2" data-level-index="{{index}}">
+    <input type="hidden" name="criteria[{{criterionindex}}][levels][{{index}}][id]" value="{{id}}">
+    <input class="form-control" name="criteria[{{criterionindex}}][levels][{{index}}][label]"
+        value="{{label}}" placeholder="{{#str}}level, mod_videorubric{{/str}}" required>
+    <textarea class="form-control" name="criteria[{{criterionindex}}][levels][{{index}}][description]"
+        rows="2" placeholder="{{#str}}description{{/str}}">{{description}}</textarea>
+    <div class="d-flex gap-2">
+        <input class="form-control" type="number" step="0.01"
+            name="criteria[{{criterionindex}}][levels][{{index}}][points]"
+            value="{{points}}" placeholder="{{#str}}points, mod_videorubric{{/str}}" required>
+        <button type="button" class="btn btn-outline-secondary videorubric-remove-level">
+            {{#str}}remove{{/str}}
+        </button>
+    </div>
+</div>

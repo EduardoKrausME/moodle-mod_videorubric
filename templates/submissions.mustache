@@ -1,0 +1,51 @@
+{{!
+    @template mod_videorubric/submissions
+    Example context (json):
+    {"cmid":1,"groups":[],"statusoptions":[],"rows":[]}
+}}
+<h2>{{#str}}reviewsubmissions, mod_videorubric{{/str}}</h2>
+
+<form method="get" class="d-flex gap-2 align-items-end mb-3">
+    <input type="hidden" name="id" value="{{cmid}}">
+    <div>
+        <label class="form-label" for="videorubric-group-filter">{{#str}}group{{/str}}</label>
+        <select class="form-select" id="videorubric-group-filter" name="group">
+            {{#groups}}
+                <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+            {{/groups}}
+        </select>
+    </div>
+    <div>
+        <label class="form-label" for="videorubric-status-filter">{{#str}}status{{/str}}</label>
+        <select class="form-select" id="videorubric-status-filter" name="status">
+            {{#statusoptions}}
+                <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+            {{/statusoptions}}
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">{{#str}}filter{{/str}}</button>
+</form>
+
+<table class="generaltable">
+    <thead>
+        <tr>
+            <th scope="col">{{#str}}student, mod_videorubric{{/str}}</th>
+            <th scope="col">{{#str}}status{{/str}}</th>
+            <th scope="col">{{#str}}grade{{/str}}</th>
+            <th scope="col">{{#str}}actions{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#rows}}
+            <tr>
+                <td>{{student}}</td>
+                <td>{{status}}</td>
+                <td>{{score}}</td>
+                <td>
+                    {{#hasreview}}<a href="{{reviewurl}}">{{#str}}review, mod_videorubric{{/str}}</a>{{/hasreview}}
+                    {{^hasreview}}-{{/hasreview}}
+                </td>
+            </tr>
+        {{/rows}}
+    </tbody>
+</table>

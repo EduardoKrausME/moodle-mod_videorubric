@@ -1,0 +1,22 @@
+{{!
+    @template mod_videorubric/rubric
+    Example context (json):
+    {"sesskey":"abc","criteria":[]}
+}}
+<h2>{{#str}}managerubric, mod_videorubric{{/str}}</h2>
+<p class="text-muted">{{#str}}rubrichelp, mod_videorubric{{/str}}</p>
+
+<form method="post" id="videorubric-rubric-form">
+    <input type="hidden" name="sesskey" value="{{sesskey}}">
+    <div id="videorubric-criteria">
+        {{#criteria}}
+            {{> mod_videorubric/rubric_criterion}}
+        {{/criteria}}
+    </div>
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-secondary" id="videorubric-add-criterion">
+            {{#str}}addcriterion, mod_videorubric{{/str}}
+        </button>
+        <button type="submit" class="btn btn-primary">{{#str}}savechanges{{/str}}</button>
+    </div>
+</form>
