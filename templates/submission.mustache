@@ -1,0 +1,60 @@
+<div class="videorubric-submission" data-submissionid="{{submissionid}}">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="badge bg-secondary">{{status}}</span>
+        {{#duedate}}<span class="text-muted">{{#str}}duedate, mod_videorubric{{/str}}: {{duedate}}</span>{{/duedate}}
+    </div>
+
+    {{#hasvideo}}
+        <div class="videorubric-current-video mb-4">
+            <video class="w-100 rounded" controls preload="metadata" src="{{videourl}}"></video>
+        </div>
+    {{/hasvideo}}
+
+    {{^issubmitted}}
+        {{#allowupload}}
+            <section class="card mb-4">
+                <div class="card-body">
+                    <h3 class="h5">{{#str}}uploadvideo, mod_videorubric{{/str}}</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="sesskey" value="{{sesskey}}">
+                        <input type="hidden" name="duration" id="videorubric-upload-duration" value="0">
+                        <input class="form-control mb-3" type="file" name="videofile" accept="video/mp4,video/webm,video/quicktime" required>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-secondary" type="submit" name="action" value="draft">{{#str}}savedraft, mod_videorubric{{/str}}</button>
+                            <button class="btn btn-primary" type="submit" name="action" value="submit">{{#str}}submitfinal, mod_videorubric{{/str}}</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        {{/allowupload}}
+
+        {{#allowrecording}}
+            <section class="card mb-4" id="videorubric-recorder">
+                <div class="card-body">
+                    <h3 class="h5">{{#str}}recordvideo, mod_videorubric{{/str}}</h3>
+                    <p class="text-muted">{{#str}}recordvideohelp, mod_videorubric{{/str}}</p>
+                    <video id="videorubric-camera" class="w-100 rounded bg-dark mb-3" autoplay muted playsinline></video>
+                    <video id="videorubric-recorded-preview" class="w-100 rounded d-none mb-3" controls playsinline></video>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-outline-primary" id="videorubric-enable-camera">{{#str}}enablecamera, mod_videorubric{{/str}}</button>
+                        <button type="button" class="btn btn-danger" id="videorubric-start-record" disabled>{{#str}}startrecording, mod_videorubric{{/str}}</button>
+                        <button type="button" class="btn btn-secondary d-none" id="videorubric-stop-record">{{#str}}stoprecording, mod_videorubric{{/str}}</button>
+                        <button type="button" class="btn btn-primary d-none" id="videorubric-upload-recording">{{#str}}saverecording, mod_videorubric{{/str}}</button>
+                    </div>
+                    <div id="videorubric-recording-status" class="small text-muted mt-2" aria-live="polite"></div>
+                </div>
+            </section>
+        {{/allowrecording}}
+
+        {{#hasvideo}}
+            <form method="post" class="mt-3">
+                <input type="hidden" name="sesskey" value="{{sesskey}}">
+                <button class="btn btn-primary" type="submit" name="action" value="submit">{{#str}}submitfinal, mod_videorubric{{/str}}</button>
+            </form>
+        {{/hasvideo}}
+    {{/issubmitted}}
+
+    {{#issubmitted}}
+        <div class="alert alert-success">{{#str}}submissionlockedinfo, mod_videorubric{{/str}}</div>
+    {{/issubmitted}}
+</div>

@@ -1,0 +1,109 @@
+<div class="videorubric-grading" data-submissionid="{{submissionid}}">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+            <a class="btn btn-link px-0" href="{{backurl}}">← {{#str}}backtosubmissions, mod_videorubric{{/str}}</a>
+            <h2 class="h4 mb-0">{{studentname}}</h2>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            {{#hasprevious}}<a class="btn btn-outline-secondary" href="{{previousurl}}">← {{#str}}previousstudent, mod_videorubric{{/str}}</a>{{/hasprevious}}
+            {{#hasnext}}<a class="btn btn-outline-secondary" href="{{nexturl}}">{{#str}}nextstudent, mod_videorubric{{/str}} →</a>{{/hasnext}}
+        </div>
+    </div>
+
+    <div class="videorubric-workspace">
+        <section class="videorubric-player-column">
+            <div class="videorubric-player-shell">
+                <video id="videorubric-player" controls preload="metadata" src="{{videourl}}"></video>
+                <div class="videorubric-player-meta">
+                    <div><strong>{{#str}}currenttimestamp, mod_videorubric{{/str}}:</strong> <span id="videorubric-current-time">00:00</span></div>
+                    <div><strong>{{#str}}duration, mod_videorubric{{/str}}:</strong> <span id="videorubric-duration">--:--</span></div>
+                    <label>{{#str}}playbackspeed, mod_videorubric{{/str}}
+                        <select id="videorubric-speed" class="form-select form-select-sm d-inline-block w-auto ms-1">
+                            <option value="0.5">0.5×</option>
+                            <option value="0.75">0.75×</option>
+                            <option value="1" selected>1×</option>
+                            <option value="1.25">1.25×</option>
+                            <option value="1.5">1.5×</option>
+                            <option value="2">2×</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <section class="card mt-3">
+                <div class="card-body">
+                    <h3 class="h5">{{#str}}temporalcomments, mod_videorubric{{/str}}</h3>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="videorubric-comment-time">00:00</span>
+                        <input id="videorubric-comment-input" type="text" class="form-control" placeholder="{{#str}}temporalcommentplaceholder, mod_videorubric{{/str}}">
+                        <button id="videorubric-add-comment" type="button" class="btn btn-primary">{{#str}}addcomment, mod_videorubric{{/str}}</button>
+                    </div>
+                    <div id="videorubric-comments" class="videorubric-comments">
+                        {{#comments}}
+                            <div class="videorubric-comment" data-commentid="{{id}}" data-time="{{timeposition}}">
+                                <button type="button" class="btn btn-link videorubric-seek-comment">{{time}}</button>
+                                <span class="flex-grow-1">{{comment}}</span>
+                                <button type="button" class="btn btn-sm btn-outline-danger videorubric-delete-comment" aria-label="{{#str}}delete{{/str}}">×</button>
+                            </div>
+                        {{/comments}}
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <aside class="videorubric-rubric-column">
+            <div class="videorubric-sticky-panel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="small text-muted">{{gradestatus}}</div>
+                        <div class="h4 mb-0"><span id="videorubric-final-score">{{finalscore}}</span> / {{maxgrade}}</div>
+                    </div>
+                    <span id="videorubric-save-state" class="small text-muted" aria-live="polite"></span>
+                </div>
+
+                <div class="videorubric-rubric">
+                    {{#rubric}}
+                        <section class="videorubric-grade-criterion" data-criterionid="{{id}}">
+                            <div class="mb-2">
+                                <strong>{{name}}</strong>
+                                {{#showweight}}<span class="badge bg-light text-dark ms-1">{{#str}}weight, mod_videorubric{{/str}} {{weight}}</span>{{/showweight}}
+                                {{#description}}<div class="small text-muted mt-1">{{description}}</div>{{/description}}
+                            </div>
+                            <div class="videorubric-level-grid">
+                                {{#levels}}
+                                    <button type="button" class="videorubric-level-choice {{#selected}}is-selected{{/selected}}" data-levelid="{{id}}">
+                                        <span class="videorubric-level-label">{{label}}</span>
+                                        <span class="videorubric-level-points">{{points}}</span>
+                                        {{#description}}<span class="videorubric-level-description">{{description}}</span>{{/description}}
+                                    </button>
+                                {{/levels}}
+                            </div>
+                        </section>
+                    {{/rubric}}
+                    {{^rubric}}
+                        <div class="alert alert-warning">{{#str}}norubric, mod_videorubric{{/str}}</div>
+                    {{/rubric}}
+                </div>
+
+                <div class="mt-4">
+                    <label class="form-label" for="videorubric-feedback-text"><strong>{{#str}}textfeedback, mod_videorubric{{/str}}</strong></label>
+                    <textarea id="videorubric-feedback-text" class="form-control" rows="4">{{feedbacktext}}</textarea>
+                </div>
+
+                <div class="mt-4">
+                    <strong>{{#str}}audiofeedback, mod_videorubric{{/str}}</strong>
+                    {{#hasaudio}}<audio id="videorubric-existing-audio" class="w-100 mt-2" controls src="{{audiourl}}"></audio>{{/hasaudio}}
+                    <audio id="videorubric-audio-preview" class="w-100 mt-2 d-none" controls></audio>
+                    <div class="d-flex flex-wrap gap-2 mt-2">
+                        <button type="button" class="btn btn-outline-danger" id="videorubric-audio-record">{{#str}}recordaudio, mod_videorubric{{/str}}</button>
+                        <button type="button" class="btn btn-outline-secondary d-none" id="videorubric-audio-stop">{{#str}}stoprecording, mod_videorubric{{/str}}</button>
+                        <button type="button" class="btn btn-outline-primary d-none" id="videorubric-audio-save">{{#str}}saveaudio, mod_videorubric{{/str}}</button>
+                    </div>
+                    <div id="videorubric-audio-status" class="small text-muted mt-1"></div>
+                </div>
+
+                <button type="button" class="btn btn-success w-100 mt-4" id="videorubric-finalize-grade">{{#str}}finalizegrade, mod_videorubric{{/str}}</button>
+            </div>
+        </aside>
+    </div>
+</div>

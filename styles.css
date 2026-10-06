@@ -1,0 +1,102 @@
+.videorubric-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(360px, .85fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.videorubric-player-shell {
+    background: #111;
+    border-radius: .75rem;
+    overflow: hidden;
+}
+
+.videorubric-player-shell video {
+    width: 100%;
+    display: block;
+    max-height: 70vh;
+    background: #000;
+}
+
+.videorubric-player-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: .75rem 1rem;
+    color: #fff;
+    background: #1d1d1d;
+}
+
+.videorubric-sticky-panel {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    border-radius: .75rem;
+    padding: 1rem;
+    background: var(--bs-body-bg, #fff);
+}
+
+.videorubric-grade-criterion {
+    padding: 1rem 0;
+    border-top: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+.videorubric-grade-criterion:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.videorubric-level-grid {
+    display: grid;
+    gap: .5rem;
+}
+
+.videorubric-level-choice {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .25rem .75rem;
+    width: 100%;
+    text-align: left;
+    border: 1px solid var(--bs-border-color, #ced4da);
+    border-radius: .5rem;
+    padding: .75rem;
+    background: var(--bs-body-bg, #fff);
+    color: inherit;
+}
+
+.videorubric-level-choice:hover,
+.videorubric-level-choice:focus-visible {
+    border-color: var(--bs-primary, #0d6efd);
+}
+
+.videorubric-level-choice.is-selected {
+    border: 2px solid var(--bs-primary, #0d6efd);
+    padding: calc(.75rem - 1px);
+    background: rgba(13, 110, 253, .08);
+}
+
+.videorubric-level-label { font-weight: 600; }
+.videorubric-level-points { font-variant-numeric: tabular-nums; }
+.videorubric-level-description { grid-column: 1 / -1; font-size: .875rem; opacity: .75; }
+
+.videorubric-comment {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    padding: .4rem 0;
+    border-top: 1px solid var(--bs-border-color, #eee);
+}
+
+.videorubric-comment:first-child { border-top: 0; }
+.videorubric-seek-comment { min-width: 4rem; font-variant-numeric: tabular-nums; }
+.videorubric-current-video video { max-height: 70vh; background: #000; }
+.videorubric-level { grid-template-columns: 1fr; }
+
+@media (max-width: 991.98px) {
+    .videorubric-workspace { grid-template-columns: 1fr; }
+    .videorubric-sticky-panel { position: static; max-height: none; }
+}
