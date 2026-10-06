@@ -11,21 +11,21 @@
 
 {{#isgrader}}
     <div class="d-flex flex-wrap gap-2">
-        <a class="btn btn-secondary" href="{{reviewurl}}">{{#str}}reviewsubmissions, mod_videorubric{{/str}}</a>
-        <a class="btn btn-secondary" href="{{rubricurl}}">{{#str}}managerubric, mod_videorubric{{/str}}</a>
+        <a class="btn btn-secondary" href="{{{reviewurl}}}">{{#str}}reviewsubmissions, mod_videorubric{{/str}}</a>
+        <a class="btn btn-secondary" href="{{{rubricurl}}}">{{#str}}managerubric, mod_videorubric{{/str}}</a>
     </div>
 {{/isgrader}}
 
 {{^isgrader}}
     <div class="alert alert-info">{{status}}</div>
-    <a class="btn btn-secondary" href="{{submissionurl}}">{{#str}}opensubmission, mod_videorubric{{/str}}</a>
+    <a class="btn btn-secondary" href="{{{submissionurl}}}">{{#str}}opensubmission, mod_videorubric{{/str}}</a>
 
     {{#hasfeedback}}
         <section class="mt-4">
             <h3>{{#str}}feedback, mod_videorubric{{/str}}</h3>
             <div class="h5">{{#str}}finalscore, mod_videorubric{{/str}}: {{finalscore}}</div>
             {{#hasfeedbacktext}}<div>{{{feedbacktext}}}</div>{{/hasfeedbacktext}}
-            {{#hasaudio}}<audio controls src="{{audiourl}}" class="w-100 mt-3"></audio>{{/hasaudio}}
+            {{#hasaudio}}<audio controls src="{{{audiourl}}}" class="w-100 mt-3"></audio>{{/hasaudio}}
         </section>
     {{/hasfeedback}}
 {{/isgrader}}
