@@ -17,7 +17,7 @@
 /**
  * upgrade.php
  *
- * @package   mod_=videorubric
+ * @package   mod_videorubric
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,6 +28,6 @@
  * @param int $oldversion Previously installed version.
  * @return bool
  */
-function xmldb_=videorubric_upgrade(int $oldversion): bool {
+function xmldb_videorubric_upgrade(int $oldversion): bool {
     return true;
 }
