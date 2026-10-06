@@ -6,19 +6,19 @@
 <div class="videorubric-grading" data-submissionid="{{submissionid}}">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <div>
-            <a class="btn btn-link px-0" href="{{backurl}}">← {{#str}}backtosubmissions, mod_videorubric{{/str}}</a>
+            <a class="btn btn-link px-0" href="{{{backurl}}}">← {{#str}}backtosubmissions, mod_videorubric{{/str}}</a>
             <h2 class="h4 mb-0">{{studentname}}</h2>
         </div>
         <div class="d-flex align-items-center gap-2">
-            {{#hasprevious}}<a class="btn btn-outline-secondary" href="{{previousurl}}">← {{#str}}previousstudent, mod_videorubric{{/str}}</a>{{/hasprevious}}
-            {{#hasnext}}<a class="btn btn-outline-secondary" href="{{nexturl}}">{{#str}}nextstudent, mod_videorubric{{/str}} →</a>{{/hasnext}}
+            {{#hasprevious}}<a class="btn btn-outline-secondary" href="{{{previousurl}}}">← {{#str}}previousstudent, mod_videorubric{{/str}}</a>{{/hasprevious}}
+            {{#hasnext}}<a class="btn btn-outline-secondary" href="{{{nexturl}}}">{{#str}}nextstudent, mod_videorubric{{/str}} →</a>{{/hasnext}}
         </div>
     </div>
 
     <div class="videorubric-workspace">
         <section class="videorubric-player-column">
             <div class="videorubric-player-shell">
-                <video id="videorubric-player" controls preload="metadata" src="{{videourl}}"></video>
+                <video id="videorubric-player" controls preload="metadata" src="{{{videourl}}}"></video>
                 <div class="videorubric-player-meta">
                     <div><strong>{{#str}}currenttimestamp, mod_videorubric{{/str}}:</strong> <span id="videorubric-current-time">00:00</span></div>
                     <div><strong>{{#str}}duration, mod_videorubric{{/str}}:</strong> <span id="videorubric-duration">--:--</span></div>
@@ -95,7 +95,7 @@
 
                 <div class="mt-4">
                     <strong>{{#str}}audiofeedback, mod_videorubric{{/str}}</strong>
-                    {{#hasaudio}}<audio id="videorubric-existing-audio" class="w-100 mt-2" controls src="{{audiourl}}"></audio>{{/hasaudio}}
+                    {{#hasaudio}}<audio id="videorubric-existing-audio" class="w-100 mt-2" controls src="{{{audiourl}}}"></audio>{{/hasaudio}}
                     <audio id="videorubric-audio-preview" class="w-100 mt-2 d-none" controls></audio>
                     <div class="d-flex flex-wrap gap-2 mt-2">
                         <button type="button" class="btn btn-outline-danger" id="videorubric-audio-record">{{#str}}recordaudio, mod_videorubric{{/str}}</button>
