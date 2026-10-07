@@ -82,7 +82,11 @@ final class custom_completion extends activity_custom_completion {
         return [
             'completionsubmit' => get_string('completionrule:completionsubmit', 'mod_videorubric'),
             'completiongraded' => get_string('completionrule:completiongraded', 'mod_videorubric'),
-            'completionmin' => get_string('completionrule:completionminvalue', 'mod_videorubric', format_float($activity->completionmingrade, 2)),
+            'completionmin' => get_string(
+                'completionrule:completionminvalue',
+                'mod_videorubric',
+                format_float($activity->completionmingrade, 2)
+            ),
         ];
     }
 

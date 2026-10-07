@@ -64,7 +64,12 @@ final class save_grade_level extends external_api {
         self::validate_context($context);
         \mod_videorubric\local\access::require_grading_access($submission, $cm, $context, $USER->id);
 
-        $grade = \mod_videorubric\local\grading_manager::select_level($submission, $params['criterionid'], $params['levelid'], $USER->id);
+        $grade = \mod_videorubric\local\grading_manager::select_level(
+            $submission,
+            $params['criterionid'],
+            $params['levelid'],
+            $USER->id
+        );
         return [
             'gradeid' => (int)$grade->id,
             'rawscore' => (float)$grade->rawscore,

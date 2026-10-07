@@ -243,7 +243,9 @@ final class grading_manager {
                 }
                 $weight = max(0.0, (float)$criterion->weight);
                 if ($criterionmax > 0 && $weight > 0) {
-                    $points = isset($selectedbycriterion[$criterion->id]) ? (float)$selectedbycriterion[$criterion->id]->points : 0.0;
+                    $points = isset($selectedbycriterion[$criterion->id])
+                        ? (float)$selectedbycriterion[$criterion->id]->points
+                        : 0.0;
                     $weighted += ($points / $criterionmax) * $weight;
                     $weighttotal += $weight;
                 }

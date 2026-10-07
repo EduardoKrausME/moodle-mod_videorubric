@@ -54,7 +54,8 @@ final class submission_graded extends \core\event\base {
      * @return string Return value.
      */
     public function get_description(): string {
-        return "The user with id '{$this->userid}' graded submission '{$this->other['submissionid']}' for user '{$this->relateduserid}'.";
+        return "The user with id '{$this->userid}' graded submission " .
+            "'{$this->other['submissionid']}' for user '{$this->relateduserid}'.";
     }
 
     /**

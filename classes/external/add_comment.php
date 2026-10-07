@@ -66,7 +66,13 @@ final class add_comment extends external_api {
         $context = \context_module::instance($cm->id);
         self::validate_context($context);
         \mod_videorubric\local\access::require_grading_access($submission, $cm, $context, $USER->id);
-        $record = \mod_videorubric\local\grading_manager::add_comment($submission, $params['timeposition'], $params['comment'], $USER->id, $context);
+        $record = \mod_videorubric\local\grading_manager::add_comment(
+            $submission,
+            $params['timeposition'],
+            $params['comment'],
+            $USER->id,
+            $context
+        );
         return [
             'id' => (int)$record->id,
             'timeposition' => (int)$record->timeposition,

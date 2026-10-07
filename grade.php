@@ -86,7 +86,13 @@ foreach ($DB->get_records('videorubric_comment', ['submissionid' => $submission-
 }
 
 // Build previous/next navigation using only accessible submitted users and preserving group filter.
-$participants = get_enrolled_users($context, 'mod/videorubric:submit', $groupid, 'u.id,u.firstname,u.lastname', 'u.lastname,u.firstname');
+$participants = get_enrolled_users(
+    $context,
+    'mod/videorubric:submit',
+    $groupid,
+    'u.id,u.firstname,u.lastname',
+    'u.lastname,u.firstname'
+);
 $queue = [];
 foreach ($participants as $participant) {
     if (!\mod_videorubric\local\access::can_access_user($cm, $context, $USER->id, $participant->id)) {
@@ -138,7 +144,12 @@ $data = [
     'hasaudio' => (bool)$audio,
 ];
 
-$PAGE->set_url('/mod/videorubric/grade.php', ['id' => $cm->id, 'userid' => $userid, 'group' => $groupid, 'status' => $statusfilter]);
+$PAGE->set_url('/mod/videorubric/grade.php', [
+    'id' => $cm->id,
+    'userid' => $userid,
+    'group' => $groupid,
+    'status' => $statusfilter,
+]);
 $PAGE->set_title(get_string('gradingstudent', 'mod_videorubric', fullname($student)));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->requires->css('/mod/videorubric/styles.css');
