@@ -27,5 +27,5 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version = 2026101501;
 $plugin->release = '1.0.4';
 $plugin->component = 'mod_videorubric';
-$plugin->requires = 2024100700; // Moodle 4.5.
+$plugin->requires = 2024100700;
 $plugin->maturity = MATURITY_STABLE;
