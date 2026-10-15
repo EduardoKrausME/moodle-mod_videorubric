@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $PAGE->set_url('/mod/videorubric/submission.php', ['id' => $cm->id]);
 $PAGE->set_title(get_string('submission', 'mod_videorubric'));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->requires->css('/mod/videorubric/styles.css');
 
 $videourl = \mod_videorubric\local\submission_manager::get_video_url($context, $submission->id);
 $data = [

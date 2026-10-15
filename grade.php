@@ -152,7 +152,6 @@ $PAGE->set_url('/mod/videorubric/grade.php', [
 ]);
 $PAGE->set_title(get_string('gradingstudent', 'mod_videorubric', fullname($student)));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->requires->css('/mod/videorubric/styles.css');
 $PAGE->requires->js_call_amd('mod_videorubric/grading', 'init', [[
     'cmid' => $cm->id,
     'submissionid' => $submission->id,

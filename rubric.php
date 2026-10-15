@@ -124,7 +124,6 @@ foreach ($criteria as $criterionindex => $criterion) {
 $PAGE->set_url('/mod/videorubric/rubric.php', ['id' => $cm->id]);
 $PAGE->set_title(get_string('managerubric', 'mod_videorubric'));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->requires->css('/mod/videorubric/styles.css');
 $PAGE->requires->js_call_amd('mod_videorubric/rubric_editor', 'init');
 
 echo $OUTPUT->header();
