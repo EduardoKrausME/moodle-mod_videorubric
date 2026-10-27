@@ -95,7 +95,7 @@ final class video_duration {
                 $parts = unpack('Nhigh/Nlow', $extended);
                 $atomsize = $parts['high'] * 4294967296 + $parts['low'];
                 $headersize = 16;
-            } elseif ($atomsize === 0) {
+            } else if ($atomsize === 0) {
                 $atomsize = $end - $position;
             }
             if ($atomsize < $headersize || $atomsize > $end - $position) {
@@ -165,23 +165,23 @@ final class video_duration {
             if ($id === 0x18538067) {
                 $insegment = true;
                 continue;
-            } elseif ($insegment && $id === 0x1F43B675) {
+            } else if ($insegment && $id === 0x1F43B675) {
                 $clustertime = 0;
                 continue;
-            } elseif ($insegment && $id === 0x2AD7B1 && $amount > 0 && $amount <= 8) {
+            } else if ($insegment && $id === 0x2AD7B1 && $amount > 0 && $amount <= 8) {
                 $scale = self::big_endian_integer(fread($handle, $amount));
                 if ($scale <= 0) {
                     return null;
                 }
-            } elseif ($insegment && $id === 0x4489 && ($amount === 4 || $amount === 8)) {
+            } else if ($insegment && $id === 0x4489 && ($amount === 4 || $amount === 8)) {
                 $bytes = fread($handle, $amount);
                 $value = unpack($amount === 4 ? 'G' : 'E', $bytes)[1];
                 if (is_finite($value) && $value > 0) {
                     $duration = max($duration ?? 0, $value);
                 }
-            } elseif ($insegment && $id === 0xE7 && $amount > 0 && $amount <= 8) {
+            } else if ($insegment && $id === 0xE7 && $amount > 0 && $amount <= 8) {
                 $clustertime = self::big_endian_integer(fread($handle, $amount));
-            } elseif ($insegment && ($id === 0xA3 || $id === 0xA1) && $amount >= 4) {
+            } else if ($insegment && ($id === 0xA3 || $id === 0xA1) && $amount >= 4) {
                 $bytes = fread($handle, min($amount, 12));
                 $first = ord($bytes[0]);
                 $trackbytes = 1;
@@ -195,7 +195,7 @@ final class video_duration {
                     }
                     $maxblock = max($maxblock ?? 0, $clustertime + $timestamp);
                 }
-            } elseif (in_array($id, [0x1A45DFA3, 0x18538067, 0x1549A966, 0x1F43B675, 0xA0], true)) {
+            } else if (in_array($id, [0x1A45DFA3, 0x18538067, 0x1549A966, 0x1F43B675, 0xA0], true)) {
                 // Descend only into known containers; large video payloads are skipped.
                 continue;
             }
