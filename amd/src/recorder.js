@@ -101,7 +101,6 @@ define(['core/notification'], function(Notification) {
             form.append('cmid', config.cmid);
             form.append('submissionid', config.submissionid);
             form.append('sesskey', config.sesskey);
-            form.append('duration', Math.floor((Date.now() - started) / 1000));
             form.append('video', blob, blob.type.includes('mp4') ? 'recording.mp4' : 'recording.webm');
             setStatus('Saving…');
             upload.disabled = true;

@@ -88,15 +88,14 @@ final class submission_manager {
      * @param string $originalname Parameter originalname.
      * @param string $mimetype Parameter mimetype.
      * @param int $filesize Parameter filesize.
-     * @param int $duration Parameter duration.
      * @return void Return value.
      */
     public static function save_uploaded_video(\stdClass $submission, \context_module $context, string $tmpname,
-            string $originalname, string $mimetype, int $filesize, int $duration = 0): void {
+            string $originalname, string $mimetype, int $filesize): void {
         global $DB;
 
         $activity = $DB->get_record('videorubric', ['id' => $submission->videorubricid], '*', MUST_EXIST);
-        self::validate_video($activity, $originalname, $mimetype, $filesize, $duration);
+        $duration = self::validate_video($activity, $originalname, $mimetype, $filesize, $tmpname);
 
         $fs = get_file_storage();
         $fs->delete_area_files($context->id, 'mod_videorubric', 'submission_video', $submission->id);
@@ -195,11 +194,11 @@ final class submission_manager {
      * @param string $filename Parameter filename.
      * @param string $mimetype Parameter mimetype.
      * @param int $filesize Parameter filesize.
-     * @param int $duration Parameter duration.
-     * @return void Return value.
+     * @param string $pathname Path to the uploaded media.
+     * @return int Validated duration in seconds.
      */
     private static function validate_video(\stdClass $activity, string $filename, string $mimetype,
-            int $filesize, int $duration): void {
+            int $filesize, string $pathname): int {
         $allowedext = ['mp4', 'webm', 'mov', 'm4v'];
         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         if (!in_array($ext, $allowedext, true)) {
@@ -213,9 +212,14 @@ final class submission_manager {
         if ($maxbytes > 0 && $filesize > $maxbytes) {
             throw new \moodle_exception('error:filesize', 'mod_videorubric');
         }
+        $duration = video_duration::from_file($pathname, $ext);
+        if ($duration === null) {
+            throw new \moodle_exception('error:videodurationunknown', 'mod_videorubric');
+        }
         if ((int)$activity->maxduration > 0 && $duration > (int)$activity->maxduration) {
             throw new \moodle_exception('error:duration', 'mod_videorubric');
         }
+        return $duration;
     }
 
     /**

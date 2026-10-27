@@ -28,7 +28,6 @@ header('Content-Type: application/json; charset=utf-8');
 try {
     $cmid = required_param('cmid', PARAM_INT);
     $submissionid = required_param('submissionid', PARAM_INT);
-    $duration = optional_param('duration', 0, PARAM_INT);
     require_sesskey();
 
     $cm = get_coursemodule_from_id('videorubric', $cmid, 0, false, MUST_EXIST);
@@ -60,8 +59,7 @@ try {
         $_FILES['video']['tmp_name'],
         'recording.' . $extension,
         $mime,
-        (int)$_FILES['video']['size'],
-        $duration
+        (int)$_FILES['video']['size']
     );
     $url = \mod_videorubric\local\submission_manager::get_video_url($context, $submission->id);
     echo json_encode(['success' => true, 'url' => $url ? $url->out(false) : '']);

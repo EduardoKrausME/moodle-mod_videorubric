@@ -55,8 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_FILES['videofile']['tmp_name'],
             $_FILES['videofile']['name'],
             $mime,
-            (int)$_FILES['videofile']['size'],
-            optional_param('duration', 0, PARAM_INT)
+            (int)$_FILES['videofile']['size']
         );
         $submission = $DB->get_record('videorubric_submission', ['id' => $submission->id], '*', MUST_EXIST);
     }
