@@ -4,6 +4,14 @@ This changelog documents only the two most recent published GitHub releases. Eac
 
 **Release scope:** The `1.0.3...1.0.5` comparison includes an intermediate `V 1.0.4` commit, but no published GitHub Release for `1.0.4` was found.
 
+## 1.0.6 - 2026-11-01
+
+- Fixed server-side video duration validation during submission uploads and added related Moodle Code Checker corrections.
+- Updated rubric editor and recorder JavaScript assets and the comment Mustache template.
+- Normalized template headers and PHP file headers and refreshed the AMD build.
+
+**Full comparison:** [1.0.5...1.0.6](https://github.com/EduardoKrausME/moodle-mod_videorubric/compare/1.0.5...1.0.6)
+
 ## 1.0.5 - 2026-10-19
 
 ### Changed
