@@ -16,7 +16,7 @@ Video files are stored with Moodle File API in the module context. File delivery
 
 The grading page is the main feature of the plugin and uses a two-column workspace.
 
-The left side contains the video player, playback speed, current timestamp and duration. Below the player the teacher can add comments to the exact current position, for example `01:24 — incorrect hand position`. Clicking a saved timestamp seeks the player back to that moment.
+The left side contains the video player, playback speed, current timestamp and duration. Below the player the teacher can add comments to the exact current position, for example `01:24 - incorrect hand position`. Clicking a saved timestamp seeks the player back to that moment.
 
 The right side remains visible while the teacher works and contains the activity rubric, current score, text feedback and audio feedback. Selecting a rubric level immediately persists that choice through Moodle AJAX services and recalculates the score without reloading the page or stopping video playback. Text feedback uses delayed autosave so normal typing does not generate a request for every keystroke.
 
@@ -30,7 +30,7 @@ Video Rubric intentionally owns its rubric definition instead of depending on th
 
 Moodle's Advanced Grading API was considered because its rubric subsystem is useful when an activity wants the standard grading form lifecycle. In this plugin, however, the primary requirement is a persistent side-by-side video workspace with granular AJAX persistence and custom timestamp/audio feedback. Coupling the workflow to the standard advanced-grading form would make the core user experience harder rather than simpler.
 
-The plugin therefore reuses Moodle where the core APIs are a clean fit — gradebook, File API, Groups, completion, Privacy and Backup/Restore — while keeping rubric persistence and the grading workspace inside `mod_videorubric`.
+The plugin therefore reuses Moodle where the core APIs are a clean fit - gradebook, File API, Groups, completion, Privacy and Backup/Restore - while keeping rubric persistence and the grading workspace inside `mod_videorubric`.
 
 The final grade is scaled to the activity maximum grade. Without weights, the selected points are divided by the sum of each criterion's maximum level. With weights enabled, each criterion is first normalised against its own maximum and then contributes according to its configured weight.
 
